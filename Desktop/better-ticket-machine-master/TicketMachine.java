@@ -19,17 +19,19 @@ public class TicketMachine
     // The total amount of money collected by this machine.
     private int total;
     
-    private int bonus;
+    private boolean bonus;
+    
+    
 
     /**
      * Create a machine that issues tickets of the given price.
      */
-    public TicketMachine(int cost)
+    public TicketMachine(int cost, boolean bonus)
     {
         price = cost;
         balance = 0;
         total = 0;
-        bonus = price + 50;
+        
     }
     public int emptyMachine()
     {
@@ -78,6 +80,7 @@ public class TicketMachine
      */
     public void printTicket()
     {
+       if (bonus == false){
         if(balance >= price) {
             // Simulate the printing of a ticket.
             System.out.println("##################");
@@ -91,12 +94,18 @@ public class TicketMachine
             total = total + price;
             // Reduce the balance by the prince.
             balance = balance - price;
-          
-        if (balance >= bonus){        
+        } 
+        else {
+            System.out.println("You must insert at least: " +
+                               (price - balance) + " more cents.");
+            System.out.println("You must insert at least: " +
+                               ((price + 50) - balance) + " more cents. for premmium");
+        } }
+        else{      
             System.out.println("##################");
             System.out.println("# The BlueJ Line");
             System.out.println("# Ticket Premmium");
-            System.out.println("# " + bonus  + " cents.");
+            System.out.println("# " + 50  + " cents.");
             System.out.println("##################");
             System.out.println();
             System.out.println("##################");
@@ -108,15 +117,15 @@ public class TicketMachine
             total = total + price;
             // Reduce the balance by the prince.
             balance = balance - price;
+        
         }
+    
+        
     }
-        else {
-            System.out.println("You must insert at least: " +
-                               (price - balance) + " more cents.");
-            System.out.println("You must insert at least: " +
-                               ((price + bonus) - balance) + " more cents. for premmium");
-        }
-    }
+       
+    
+        
+    
    
     /**
      * Return the money in the balance.
