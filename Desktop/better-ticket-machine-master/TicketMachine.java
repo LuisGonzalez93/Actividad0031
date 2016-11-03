@@ -13,10 +13,13 @@ public class TicketMachine
 {
     // The price of a ticket from this machine.
     private int price;
+    
     // The amount of money entered by a customer so far.
     private int balance;
     // The total amount of money collected by this machine.
     private int total;
+    
+    private int bonus;
 
     /**
      * Create a machine that issues tickets of the given price.
@@ -26,16 +29,17 @@ public class TicketMachine
         price = cost;
         balance = 0;
         total = 0;
+        bonus = price + 50;
     }
     public int emptyMachine()
     {
         if (balance >0){
-        int emptyMachine;
+      return -1;
+    }
+        else{  int emptyMachine;
         emptyMachine = total;
         total = total - balance;
         return emptyMachine;
-    }
-        else{return -1;
         }
     }
     /**
@@ -87,14 +91,33 @@ public class TicketMachine
             total = total + price;
             // Reduce the balance by the prince.
             balance = balance - price;
+          
+        if (balance >= bonus){        
+            System.out.println("##################");
+            System.out.println("# The BlueJ Line");
+            System.out.println("# Ticket Premmium");
+            System.out.println("# " + price  + " cents.");
+            System.out.println("##################");
+            System.out.println();
+            System.out.println("##################");
+            System.out.println("# Tarjeta Regalo");
+            System.out.println("# TicketBonus");
+            System.out.println("##################");
+
+            // Update the total collected with the price.
+            total = total + price;
+            // Reduce the balance by the prince.
+            balance = balance - price;
         }
+    }
         else {
             System.out.println("You must insert at least: " +
                                (price - balance) + " more cents.");
-                    
+            System.out.println("You must insert at least: " +
+                               ((price + bonus) - balance) + " more cents. for premmium");
         }
     }
-
+   
     /**
      * Return the money in the balance.
      * The balance is cleared.
