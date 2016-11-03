@@ -29,10 +29,14 @@ public class TicketMachine
     }
     public int emptyMachine()
     {
+        if (balance >0){
         int emptyMachine;
         emptyMachine = total;
         total = total - balance;
         return emptyMachine;
+    }
+        else{return -1;
+        }
     }
     /**
      * @Return The price of a ticket.
