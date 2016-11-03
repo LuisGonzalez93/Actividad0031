@@ -96,7 +96,7 @@ public class TicketMachine
             System.out.println("##################");
             System.out.println("# The BlueJ Line");
             System.out.println("# Ticket Premmium");
-            System.out.println("# " + price  + " cents.");
+            System.out.println("# " + bonus  + " cents.");
             System.out.println("##################");
             System.out.println();
             System.out.println("##################");
