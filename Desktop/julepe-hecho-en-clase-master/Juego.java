@@ -5,14 +5,13 @@ import java.util.Scanner;
 /**
  * Clase Juego que simula el juego del Julepe.
  * 
- * @author Miguel Bayon
+ * @author Luis Gonz·lez Haro
  */
 public class Juego
 {
     private Jugador[] jugadores;
     private Mazo mazo;
     private int paloQuePinta;
-
 
     /**
      * Constructor de la clase Juego
@@ -55,11 +54,10 @@ public class Juego
             System.out.println(jugadores[i].getNombre());
         }
         System.out.println();
-        
+
         jugar();
     }
-    
-    
+
     /**
      * M√©todo que reparte 5 cartas a cada uno de los jugadores presentes en
      * la partida y elige un palo para que pinte.
@@ -96,8 +94,6 @@ public class Juego
 
         return paloQuePinta;           
     }
-   
-
 
     /**
      * Devuelve la posici√≥n del jugador cuyo nombre se especifica como
@@ -108,16 +104,16 @@ public class Juego
      */
     private int encontrarPosicionJugadorPorNombre(String nombre)
     {
-      int posicionJugador = -1;
+        int posicionJugador = -1;
         String nombreJugador = nombre;
-      for(int i = 0; i < jugadores.length;i++){
-        if(jugadores[i].getNombre().equals(nombreJugador)){
-        posicionJugador = i;
+        for(int i = 0; i < jugadores.length;i++){
+            if(jugadores[i].getNombre().equals(nombreJugador)){
+                posicionJugador = i;
+            }
         }
+        return posicionJugador;
     }
-    return posicionJugador;
-}
-        
+
     /**
      * Desarrolla una partida de julepe teniendo en cuenta que el mazo y los
      * jugadores ya han sido creados. 
@@ -141,22 +137,48 @@ public class Juego
      *    bazas) o "no es julepe".
      *
      */
-    private void jugar()
+    public void jugar()
     {
+        repartir();
+        int posicionJugadorGanando = 0;
+        int contador = 0;
         
+        while(contador <5 ){
+        jugadores[0].verCartasJugador();
+        System.out.println("Elige una carta a tirar");
+        Scanner sc = new Scanner(System.in);
+        String nombreCarta = sc.nextLine();
+        jugadores[0].tirarCarta(nombreCarta);
+        Baza nuevaBaza = new Baza(jugadores.length,paloQuePinta);
+        nuevaBaza.addCarta(jugadores[0].tirarCarta(nombreCarta),jugadores[0].getNombre());
+        Carta cartaTirada = jugadores[0].tirarCarta(nombreCarta);
+        if(cartaTirada == null){
+        System.out.println("Esa carta no es v·lida");
+        sc = new Scanner(System.in);
+        nombreCarta = sc.nextLine();
+        jugadores[0].tirarCarta(nombreCarta);
+        nuevaBaza = new Baza(jugadores.length,paloQuePinta);
+        nuevaBaza.addCarta(jugadores[0].tirarCarta(nombreCarta),jugadores[0].getNombre());
         
-    }    
-}
-
-
-
-
-
-
-
-
-
-
-
+        }
+        for(int i = 1; i < jugadores.length; i++){
+            jugadores[i].tirarCartaAleatoria();
+            nuevaBaza.addCarta(jugadores[i].tirarCartaAleatoria(),jugadores[i].getNombre());
+        }
+        
+        posicionJugadorGanando = encontrarPosicionJugadorPorNombre(nuevaBaza.nombreJugadorQueVaGanandoLaBaza());
+        jugadores[posicionJugadorGanando].addBaza(nuevaBaza);
+        System.out.println("El jugador que ha ganado ha sido:" + nuevaBaza.nombreJugadorQueVaGanandoLaBaza());
+        contador++;
+    }
+    System.out.println("Has ganado:" + jugadores[0].getNumeroBazasGanadas());  
+    if(jugadores[0].getNumeroBazasGanadas() < 2){
+    System.out.println("Es julepe");
+    }
+    else{
+    System.out.println("No es julepe");
+    }
+    }
+}    
 
 
